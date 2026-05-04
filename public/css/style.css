@@ -166,3 +166,7 @@ button:active {
 #gameOver.visible {
     display: flex;
 }
+
+#gameOver.win {
+    color: rgba(22, 145, 74, 0.86);
+}

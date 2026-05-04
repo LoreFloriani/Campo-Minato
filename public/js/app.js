@@ -18,6 +18,7 @@ let revealed = [];
 let flagged = [];
 let flagsLeft = 0;
 let gameLost = false;
+let gameWon = false;
 
 document.getElementById("easy").addEventListener("click", () => {
     loadGame("easy");
@@ -38,6 +39,7 @@ async function loadGame(difficulty) {
     gameMatrix = data.matrix;
     flagsLeft = data.bombs;
     gameLost = false;
+    gameWon = false;
     revealed = createStateMatrix(gameMatrix, false);
     flagged = createStateMatrix(gameMatrix, false);
 
@@ -118,7 +120,7 @@ function drawCellContent(cell, y, x) {
 }
 
 function revealCell(y, x) {
-    if (gameLost || revealed[y][x] || flagged[y][x]) {
+    if (gameLost || gameWon || revealed[y][x] || flagged[y][x]) {
         return;
     }
 
@@ -160,7 +162,7 @@ function revealEmptyArea(startY, startX) {
 }
 
 function toggleFlag(y, x) {
-    if (gameLost || revealed[y][x]) {
+    if (gameLost || gameWon || revealed[y][x]) {
         return;
     }
 
@@ -174,6 +176,10 @@ function toggleFlag(y, x) {
 
     updateFlagCounter();
     refreshBoard();
+
+    if (checkWin()) {
+        winGame();
+    }
 }
 
 function loseGame() {
@@ -186,7 +192,26 @@ function loseGame() {
     }
 
     refreshBoard();
-    showGameOver();
+    showGameOver("Hai perso", false);
+}
+
+function winGame() {
+    gameWon = true;
+    showGameOver("Hai vinto", true);
+}
+
+function checkWin() {
+    for (let y = 0; y < gameMatrix.length; y++) {
+        for (let x = 0; x < gameMatrix[y].length; x++) {
+            const isBomb = gameMatrix[y][x] === -1;
+
+            if ((isBomb && !flagged[y][x]) || (!isBomb && flagged[y][x])) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 function refreshBoard() {
@@ -212,10 +237,14 @@ function updateFlagCounter() {
     document.getElementById("flagsLeft").textContent = flagsLeft;
 }
 
-function showGameOver() {
-    document.getElementById("gameOver").classList.add("visible");
+function showGameOver(message, isWin) {
+    const gameOver = document.getElementById("gameOver");
+    gameOver.textContent = message;
+    gameOver.classList.toggle("win", isWin);
+    gameOver.classList.add("visible");
 }
 
 function hideGameOver() {
-    document.getElementById("gameOver").classList.remove("visible");
+    const gameOver = document.getElementById("gameOver");
+    gameOver.classList.remove("visible", "win");
 }
