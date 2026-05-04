@@ -40,7 +40,7 @@ function drawMatrix(matrix) {
         row.id = "row_" + i;
 
         for (let j = 0; j < matrix[i].length; j++) {
-            const cell = document.createElement("button");
+            const cell = document.createElement("div");
             const value = matrix[i][j];
 
             cell.textContent = value;
