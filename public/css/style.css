@@ -18,10 +18,18 @@ h2 {
     font-weight: 700;
 }
 
+#controls {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 button {
     width: 112px;
     height: 42px;
-    margin: 0 5px;
     border: 2px solid #2f3742;
     border-radius: 5px;
     font-size: 15px;
@@ -39,18 +47,41 @@ button:active {
     background-color: #d8e5f5;
 }
 
-#tabella {
+#flagCounter {
+    width: 92px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px solid #2f3742;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: #ffffff;
+}
+
+#flagCounter img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+#gameArea {
+    position: relative;
     min-height: 520px;
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: auto;
+}
+
+#tabella {
     padding: 8px 0 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-x: auto;
-}
-
-#tabella:empty {
-    border: 0;
 }
 
 #tabella > div {
@@ -58,30 +89,80 @@ button:active {
     width: max-content;
 }
 
-#tabella > div > div {
+.cell {
     width: 34px;
     height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-right: 1px solid #2f3742;
-    border-bottom: 1px solid #2f3742;
-    font-size: 14px;
-    font-weight: 700;
+    border-right: 1px solid #24301f;
+    border-bottom: 1px solid #24301f;
+    font-size: 16px;
+    font-weight: 800;
     line-height: 1;
-    color: #111827;
     user-select: none;
 }
 
-#tabella > div:first-child > div {
-    border-top: 1px solid #2f3742;
+#tabella > div:first-child > .cell {
+    border-top: 1px solid #24301f;
 }
 
-#tabella > div > div:first-child {
-    border-left: 1px solid #2f3742;
+#tabella > div > .cell:first-child {
+    border-left: 1px solid #24301f;
 }
 
-#tabella > div > div:hover {
-    outline: 2px solid #111827;
-    outline-offset: -2px;
+.cell.covered {
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.cell.covered:hover {
+    filter: brightness(1.12);
+}
+
+.grass-1 {
+    background-color: #4f8f2f;
+}
+
+.grass-2 {
+    background-color: #5fa33a;
+}
+
+.grass-3 {
+    background-color: #6eb848;
+}
+
+.grass-4 {
+    background-color: #3f7d28;
+}
+
+.cell.revealed {
+    background-color: #d6c3a3;
+    border-color: #8b7356;
+}
+
+.cell img {
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+#gameOver {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: rgba(210, 0, 0, 0.82);
+    background-color: rgba(237, 240, 243, 0.72);
+    pointer-events: none;
+}
+
+#gameOver.visible {
+    display: flex;
 }

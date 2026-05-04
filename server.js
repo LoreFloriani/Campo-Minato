@@ -34,7 +34,10 @@ app.get('/api/game/:difficulty', (req, res) => {
     const game = new GameMatrix(rows, cols, pOne);
     const matrix = game.getMatrix();
 
-    res.json(matrix);
+    res.json({
+        matrix: matrix,
+        bombs: game.countTotalBombs()
+    });
 });
 
 app.use((req, res) => {

@@ -10,11 +10,21 @@
 
         <h2>Campo Minato</h2>
 
-        <button id="easy">Facile</button>
-        <button id="midium">Medio</button>
-        <button id="dificult">Difficile</button>
+        <div id="controls">
+            <button id="easy">Facile</button>
+            <button id="midium">Medio</button>
+            <button id="dificult">Difficile</button>
 
-        <div id="tabella"></div>
+            <div id="flagCounter">
+                <img src="img/flag.png" alt="Flag">
+                <span id="flagsLeft">0</span>
+            </div>
+        </div>
+
+        <div id="gameArea">
+            <div id="tabella"></div>
+            <div id="gameOver">Hai perso</div>
+        </div>
 
         <script src="js/app.js"></script>
 
