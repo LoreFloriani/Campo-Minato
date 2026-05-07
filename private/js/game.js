@@ -27,39 +27,124 @@ class GameMatrix {
     }
 
     countBomb() {
-        const rows = this.matrix.length;
-        const cols = this.matrix[0].length;
+        let yi = this.matrix.length;
+        let xi = this.matrix[0].length;
 
-        for (let y = 0; y < rows; y++) {
-            for (let x = 0; x < cols; x++) {
-                if (this.matrix[y][x] === -1) {
-                    continue;
-                }
+        for (let y = 0; y < yi; y++) {
+            for (let x = 0; x < xi; x++) {
 
-                let count = 0;
+                if (this.matrix[y][x] != -1) {
 
-                for (let dy = -1; dy <= 1; dy++) {
-                    for (let dx = -1; dx <= 1; dx++) {
-                        if (dy === 0 && dx === 0) {
-                            continue;
-                        }
+                    let sotto = y == 0;
+                    let sopra = y == yi - 1;
+                    let sx = x == 0;
+                    let dx = x == xi - 1;
 
-                        const nextY = y + dy;
-                        const nextX = x + dx;
+                    if (sotto && !dx && !sx && !sopra) {
+                        let count = 0;
 
-                        if (this.isInside(nextY, nextX) && this.matrix[nextY][nextX] === -1) {
-                            count++;
-                        }
+                        count += (this.matrix[y][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x + 1] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
+                    }
+
+                    else if (!sotto && !dx && !sx && sopra) {
+                        let count = 0;
+
+                        count += (this.matrix[y - 1][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y - 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y - 1][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x - 1] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
+                    }
+
+                    else if (!sotto && dx && !sx && !sopra) {
+                        let count = 0;
+
+                        count += (this.matrix[y - 1][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y - 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
+                    }
+
+                    else if (!sotto && !dx && sx && !sopra) {
+                        let count = 0;
+
+                        count += (this.matrix[y - 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y - 1][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x + 1] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
+                    }
+
+                    else if (sotto && sx) {
+                        let count = 0;
+
+                        count += (this.matrix[y][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x + 1] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
+                    }
+
+                    else if (sotto && dx) {
+                        let count = 0;
+
+                        count += (this.matrix[y][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
+                    }
+
+                    else if (sopra && sx) {
+                        let count = 0;
+
+                        count += (this.matrix[y - 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y - 1][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x + 1] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
+                    }
+
+                    else if (sopra && dx) {
+                        let count = 0;
+
+                        count += (this.matrix[y - 1][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y - 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x - 1] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
+                    }
+
+                    else {
+                        let count = 0;
+
+                        count += (this.matrix[y - 1][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y - 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y - 1][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x + 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x - 1] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x] == -1) ? 1 : 0;
+                        count += (this.matrix[y + 1][x + 1] == -1) ? 1 : 0;
+
+                        this.matrix[y][x] = count;
                     }
                 }
-
-                this.matrix[y][x] = count;
             }
         }
-    }
-
-    isInside(y, x) {
-        return y >= 0 && y < this.matrix.length && x >= 0 && x < this.matrix[0].length;
     }
 
     randomBomb() {
